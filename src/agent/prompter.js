@@ -3,7 +3,6 @@ import { Examples } from '../utils/examples.js';
 import { getCommandDocs } from './commands/index.js';
 import { getSkillDocs } from './library/index.js';
 import { stringifyTurns } from '../utils/text.js';
-import { getCommand } from './commands/index.js';
 
 import { GPT } from '../models/gpt.js';
 
@@ -131,10 +130,8 @@ export class Prompter {
     async promptConvo(messages) {
         let prompt = this.profile.conversing;
         prompt = await this.replaceStrings(prompt, messages, this.convo_examples);
-        let chat_response, execute_command;
-        ({ chat_response, execute_command } = await this.chat_model.sendRequest(messages, prompt));
-        console.log('Chat Response:', chat_response);
-        console.log('Execute Command:', execute_command);
+        let chat_response, execute_command, audio;
+        ({ chat_response, execute_command, audio } = await this.chat_model.sendChatRequest(messages, prompt));
         
         if (chat_response === undefined || execute_command === undefined) {
             return "Oops! OpenAI's server took an arrow to the knee. Mind trying that prompt again?";

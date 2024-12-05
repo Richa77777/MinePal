@@ -251,7 +251,6 @@ export class Agent {
             return;
         }
 
-        // await this.history.add("system", "When you wish to do something, never just say you're doing it, you must pick a command from the docs and call it like !commandName(params). NEVER say anything like this: 'Sure, I've stopped.', instead say this: 'Sure, I'll stop. !stop'");
         await this.history.add(source, message);
         // Process the message and generate responses
         for (let i = 0; i < 5; i++) {
@@ -295,7 +294,7 @@ export class Agent {
                 console.log(`Full response: ""${res}""`)
                 res = truncCommandMessage(res);
                 if (!commandExists(command_name)) {
-                    this.history.add('system', `Command ${command_name} does not exist. Use !newAction to perform custom actions.`);
+                    this.history.add('system', `Command ${command_name} does not exist.`);
                     console.log('Agent hallucinated command:', command_name)
                     continue;
                 }

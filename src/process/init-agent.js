@@ -61,3 +61,35 @@ process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
     process.exit(1);
 });
+
+// // When you have audio data to stream
+// const CHUNK_SIZE = 16384; // 16KB chunks, adjust based on your needs
+
+// function streamAudioBuffer(audioBuffer) {
+//     // Send stream start signal
+//     process.send({ 
+//         type: 'audioStream',
+//         status: 'start',
+//         format: {
+//             sampleRate: 44100, // adjust based on your audio format
+//             channels: 2,
+//             // other audio format details...
+//         }
+//     });
+
+//     // Stream the chunks
+//     for (let i = 0; i < audioBuffer.length; i += CHUNK_SIZE) {
+//         const chunk = audioBuffer.slice(i, i + CHUNK_SIZE);
+//         process.send({
+//             type: 'audioStream',
+//             status: 'data',
+//             data: chunk
+//         }, [chunk.buffer]); // Transfer the buffer instead of copying
+//     }
+
+//     // Send stream end signal
+//     process.send({
+//         type: 'audioStream',
+//         status: 'end'
+//     });
+// }
